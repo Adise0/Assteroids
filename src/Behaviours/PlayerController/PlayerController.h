@@ -1,11 +1,7 @@
 #pragma once
 
-#include <Crow2D/Component.h>
+
 #include <Crow2D/Crow2D.h>
-#include <Crow2D/components/Animator.h>
-#include <Crow2D/components/Renderer.h>
-#include <Crow2D/dataObjects/AnimationClip.h>
-#include <Crow2D/dataObjects/Sprite.h>
 #include <vector>
 
 

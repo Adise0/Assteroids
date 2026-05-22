@@ -3,10 +3,7 @@
 #include "GameScene.h"
 #include "GameManager.h"
 #include "PlayerController.h"
-#include <Crow2D/GameObject.h>
-#include <Crow2D/components/Renderer.h>
-#include <Crow2D/dataObjects/Sprite.h>
-#include <Crow2D/dataObjects/Vectors.h>
+#include "Teleporter.h"
 #include <cstdio>
 
 namespace Assteroids {
@@ -26,6 +23,7 @@ void GameScene::LoadHierachy() {
 
   GameObject &playerGO = rootGameObject->CreateChild("Player");
   playerGO.AddComponent<PlayerController>();
+  playerGO.AddComponent<Teleporter>();
   gameManager.playerGO = &playerGO;
 }
 } // namespace Assteroids

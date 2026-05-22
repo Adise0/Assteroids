@@ -1,0 +1,42 @@
+#include "Teleporter.h"
+#include <Crow2D/dataObjects/Vectors.h>
+#include <cstdio>
+#include <stdexcept>
+
+
+namespace Assteroids::Behaviours {
+
+using namespace Crow2D;
+using namespace Crow2D::Types;
+using namespace Crow2D::Components;
+
+void Teleporter::Update() { CheckBounds(); }
+
+
+void Teleporter::CheckBounds() {
+  if (!Camera::activeCamera) return;
+
+  Vector2 pos = Vector2(transform->position);
+
+  if (pos.x < Camera::activeCamera->rect.get().Left()) {
+    pos.x = Camera::activeCamera->rect.get().Right();
+    pos.y = -pos.y;
+  }
+  if (pos.x > Camera::activeCamera->rect.get().Right()) {
+    pos.x = Camera::activeCamera->rect.get().Left();
+    pos.y = -pos.y;
+  }
+  if (pos.y < Camera::activeCamera->rect.get().Bottom()) {
+    pos.y = Camera::activeCamera->rect.get().Top();
+    pos.x = -pos.x;
+  }
+  if (pos.y > Camera::activeCamera->rect.get().Top()) {
+    pos.y = Camera::activeCamera->rect.get().Bottom();
+    pos.x = -pos.x;
+  }
+
+  if (pos != Vector2(transform->position)) transform->position = Vector3(pos);
+}
+
+
+} // namespace Assteroids::Behaviours
