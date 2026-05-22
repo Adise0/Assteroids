@@ -2,12 +2,12 @@
 
 #include <Crow2D/Crow2D.h>
 
-namespace Template {
+namespace Assteroids {
 
-class SampleScene : public Crow2D::Scenes::Scene {
+class MainMenu : public Crow2D::Scenes::Scene {
   // #region Crow2D
 public:
-  SampleScene();
+  MainMenu();
   void Load() override;
   // #endregion
 
@@ -16,4 +16,4 @@ private:
   void LoadUI();
   // #endregion
 };
-} // namespace Template
+} // namespace Assteroids

@@ -1,14 +1,14 @@
-#include "Scenes/SampleScene/SampleScene.h"
+#include "Scenes/MainMenu/MainMenu.h"
 #include <Crow2D/Crow2D.h>
 #include <cstdio>
 
-using namespace Template;
+using namespace Assteroids;
 using namespace Crow2D;
 int main() {
   std::srand(time(NULL));
-  Config::Init("Template!");
+  Config::Init("Assteroids!");
 
-  SampleScene *sampleScene = new SampleScene();
-  Engine::Run(*sampleScene);
+  MainMenu *mainMenu = new MainMenu();
+  Engine::Run(*mainMenu);
   printf("Bye bye!\n");
 }

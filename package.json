@@ -1,10 +1,10 @@
 {
-  "name": "template",
+  "name": "assteroids",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "style": "sass ./scss:./assets/ui --watch",
+    "style": "sass ./scss:./assets --watch",
     "build": "tsc",
     "dev": "nodemon -q"
   },

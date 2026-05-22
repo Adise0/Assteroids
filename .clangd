@@ -1,6 +1,7 @@
 CompileFlags:
   Add:
     - /std:c++20
+    - /EHsc
     - -DCROW2D_BUILD_DLL
     - -DCROW2D_DLL
   Remove:
