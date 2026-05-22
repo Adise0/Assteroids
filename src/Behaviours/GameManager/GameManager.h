@@ -2,11 +2,10 @@
 
 #include <Crow2D/Crow2D.h>
 #include <Crow2D/dataObjects/Vectors.h>
-#include <Crow2D/properties/GetterProperty.h>
-
 
 namespace Assteroids::Behaviours {
 
+class Asteroid;
 
 class GameManager : public Crow2D::Components::Behaviour {
   // #region Getters
@@ -41,6 +40,10 @@ private:
   // #region Methods
 private:
   void SpawnAsteroids();
+  void SpawnAsteroid(const Crow2D::Types::Vector3 &spawnPos, const int &type,
+                     const Crow2D::Types::Vector2 &dir, const float &speed);
+  void OnAsteroidDestroyed(const Asteroid *asteroid);
+
   // #endregion
 };
 } // namespace Assteroids::Behaviours

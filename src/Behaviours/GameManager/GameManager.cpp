@@ -83,10 +83,32 @@ void GameManager::SpawnAsteroids() {
   float speed =
       MinAsteroidSpeed + (std::rand() / (float)RAND_MAX) * (MaxAsteroidSpeed - MinAsteroidSpeed);
 
+  SpawnAsteroid(Vector3(spawnPos), type, dir, speed);
+}
+
+void GameManager::SpawnAsteroid(const Crow2D::Types::Vector3 &spawnPos, const int &type,
+                                const Crow2D::Types::Vector2 &dir, const float &speed) {
   GameObject &asteroidGO = gameObject->scene->rootGameObject->CreateChild("Asteroid");
-  asteroidGO.transform->position = Vector3(spawnPos);
-  asteroidGO.AddComponent<Asteroid>().Init(type, dir, speed);
-  // Spawn
+  asteroidGO.transform->position = spawnPos;
+  Asteroid &asteroid = asteroidGO.AddComponent<Asteroid>();
+  asteroid.Init(type, dir, speed);
+  asteroid.OnAsteroidDestoryed += [this](Asteroid *asteroid) { OnAsteroidDestroyed(asteroid); };
+}
+
+void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
+  int pointsToAdd = (asteroid->type + 1) * 10;
+  _points += pointsToAdd;
+
+  if (asteroid->type == 0) return;
+
+  Vector2 newDir1 = Vector2((std::rand() / (float)RAND_MAX), (std::rand() / (float)RAND_MAX));
+  Vector2 newDir2 = Vector2((std::rand() / (float)RAND_MAX), (std::rand() / (float)RAND_MAX));
+
+  float newSpeed = asteroid->speed * 1.3f;
+  int newType = asteroid->type - 1;
+
+  SpawnAsteroid(asteroid->transform->position, newType, newDir1, newSpeed);
+  SpawnAsteroid(asteroid->transform->position, newType, newDir2, newSpeed);
 }
 
 

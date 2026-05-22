@@ -14,11 +14,23 @@ void Asteroid::Init(const int &type, const Crow2D::Types::Vector2 &dir, const fl
   this->dir = dir;
   this->speed = speed;
   turnSpeed = MinTurnSpeed + std::rand() % (MaxTurnSpeed - MinTurnSpeed);
+
+  currentHealth = (type + 1) * 2;
+
   SetupVisuals();
 }
 
 
 void Asteroid::Update() { Move(); }
+
+void Asteroid::OnTriggerEnter(const Crow2D::Components::Collider &other) {
+  if (other.gameObject->name != "Bullet") return;
+  Destroy(other.gameObject);
+  currentHealth--;
+  if (currentHealth > 0) return;
+  OnAsteroidDestoryed(this);
+  Destroy(gameObject);
+}
 
 void Asteroid::SetupVisuals() {
 
@@ -41,4 +53,5 @@ void Asteroid::Move() {
   transform->Rotate(turnSpeed * Time::deltaTime);
   transform->Translate(dir * speed * Time::deltaTime);
 }
+
 } // namespace Assteroids::Behaviours

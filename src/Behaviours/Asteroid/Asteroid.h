@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Crow2D/Crow2D.h>
+#include <Crow2D/Event.h>
+#include <Crow2D/components/colliders/Collider.h>
 
 
 namespace Assteroids::Behaviours {
@@ -12,16 +14,25 @@ private:
   const int MinTurnSpeed = 40;
   const int MaxTurnSpeed = 180;
 
+public:
   int type;
   Crow2D::Types::Vector2 dir;
   float speed;
   int turnSpeed;
+
+  int currentHealth;
+  // #endregion
+
+  // #region Events
+public:
+  Crow2D::Events::Event<Asteroid *> OnAsteroidDestoryed;
   // #endregion
 
 
   // #region Crow2D
 private:
   void Update() override;
+  void OnTriggerEnter(const Crow2D::Components::Collider &other) override;
   // #endregion
 
   // #region Methods
@@ -31,6 +42,7 @@ public:
 private:
   void Move();
   void SetupVisuals();
+
   // #endregion
 };
 } // namespace Assteroids::Behaviours
