@@ -75,9 +75,14 @@ void PlayerController::MovePlayer() {
     if (animator->currentClip != powerClip) animator->Play(powerClip);
   } else {
     if (animator->currentClip != idleClip) animator->Play(idleClip);
-    velocity -= velocity.Normalized() * deacceleration * Time::deltaTime;
-    if (velocity.SqrMagnitude() <= 0) {
-      velocity = Vector2::Zero;
+    float speed = velocity.Magnitude();
+    if (speed > 0.f) {
+      float newSpeed = speed - deceleration * Time::deltaTime;
+      if (newSpeed <= 0.f) {
+        velocity = Vector2::Zero;
+      } else {
+        velocity = velocity.Normalized() * newSpeed;
+      }
     }
   }
 

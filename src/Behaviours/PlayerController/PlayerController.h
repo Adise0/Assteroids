@@ -16,7 +16,7 @@ class PlayerController : public Crow2D::Components::Behaviour {
   // #region Data
 public:
   float acceleration = 2;
-  float deacceleration = 1;
+  float deceleration = 1;
   float maxSpeed = 10;
   float turnSpeed = 180;
   short maxLives = 4;
