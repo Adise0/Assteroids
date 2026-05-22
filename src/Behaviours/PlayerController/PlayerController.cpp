@@ -19,12 +19,20 @@ using namespace Crow2D::Animations;
 using namespace Crow2D::Scenes;
 using namespace Crow2D::Inputs;
 using namespace Crow2D::Types;
+using namespace Data;
 
-void PlayerController::Awake() { SetupVisuals(); }
+void PlayerController::Awake() {
+  stats = Stats::Singleton;
+  SetupVisuals();
+}
 void PlayerController::Update() {
   // #region Update
   MovePlayer();
   RotatePlayer();
+
+  if (InputManager::GetKey("Space").wasPressedThisFrame) {
+    stats->Upgrade(Stat::MaxSpeed);
+  }
   // #endregion
 }
 
@@ -33,7 +41,7 @@ void PlayerController::SetupVisuals() {
   LoadLevelSprites(1);
   Vector2 size(1, 1);
   engineRenderer = &gameObject->AddComponent<Renderer>(engineSprite, size);
-  shipRenderer = &gameObject->AddComponent<Renderer>(shipSprites[maxLives - 1], size);
+  shipRenderer = &gameObject->AddComponent<Renderer>(shipSprites[MaxLives], size);
   GameObject &animatorGO = gameObject->CreateChild("Animations");
   animatorGO.transform->position -= Vector3(0, 0, 1);
   animatorGO.AddComponent<Renderer>(idleSprite, size);
@@ -44,7 +52,7 @@ void PlayerController::LoadLevelSprites(short level) {
   CleanSprites();
 
 
-  for (short i = 0; i < maxLives; i++) {
+  for (short i = 0; i <= MaxLives; i++) {
     std::string name =
         "sprites/ship/lvl" + std::to_string(level) + "/Ship_" + std::to_string(i) + ".png";
 
@@ -66,10 +74,10 @@ void PlayerController::MovePlayer() {
   // #region MovePlayer
 
   if (InputManager::GetKey("W").isPressed) {
-    velocity += Vector3(transform->forward) * acceleration * Time::deltaTime;
+    velocity += Vector3(transform->forward) * stats->acceleration * Time::deltaTime;
 
-    if (velocity.SqrMagnitude() > std::pow(maxSpeed, 2)) {
-      velocity = velocity.Normalized() * maxSpeed;
+    if (velocity.SqrMagnitude() > std::pow(stats->maxSpeed, 2)) {
+      velocity = velocity.Normalized() * stats->maxSpeed;
     }
 
     if (animator->currentClip != powerClip) animator->Play(powerClip);
@@ -77,7 +85,7 @@ void PlayerController::MovePlayer() {
     if (animator->currentClip != idleClip) animator->Play(idleClip);
     float speed = velocity.Magnitude();
     if (speed > 0.f) {
-      float newSpeed = speed - deceleration * Time::deltaTime;
+      float newSpeed = speed - stats->deceleration * Time::deltaTime;
       if (newSpeed <= 0.f) {
         velocity = Vector2::Zero;
       } else {
@@ -95,10 +103,10 @@ void PlayerController::RotatePlayer() {
   // #region MovePlayer
   float angle = transform->rotation;
   if (InputManager::GetKey("A").isPressed) {
-    angle += -1 * turnSpeed * Time::deltaTime;
+    angle += -1 * stats->turnSpeed * Time::deltaTime;
   }
   if (InputManager::GetKey("D").isPressed) {
-    angle += turnSpeed * Time::deltaTime;
+    angle += (float)stats->turnSpeed * Time::deltaTime;
   }
 
   transform->rotation = angle;

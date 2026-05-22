@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "Stats.h"
 #include <Crow2D/Crow2D.h>
 #include <vector>
 
@@ -9,18 +9,20 @@ namespace Assteroids::Behaviours {
 
 
 class PlayerController : public Crow2D::Components::Behaviour {
+  // #region Getters
+  short GetCurrentLives() const;
+  // #endregion
   // #region Data
 public:
-  float acceleration = 2;
-  float deceleration = 1;
-  float maxSpeed = 10;
-  float turnSpeed = 180;
-  short maxLives = 4;
-  short currentLives = maxLives;
+  GETTER_PROPERTY(PlayerController, short, currentLives, GetCurrentLives);
+  const short MaxLives = 3;
 
 private:
-  Crow2D::Types::Vector2 velocity;
+  short _currentLives = MaxLives;
 
+private:
+  Data::Stats *stats;
+  Crow2D::Types::Vector2 velocity;
   Crow2D::Components::Animator *animator;
   Crow2D::Components::Renderer *shipRenderer;
   Crow2D::Components::Renderer *engineRenderer;
