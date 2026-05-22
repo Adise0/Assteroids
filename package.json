@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "style": "sass ./scss:./assets/ui --watch",
+    "style": "sass ./scss:./assets --watch",
     "build": "tsc",
     "dev": "nodemon -q"
   },

@@ -4,10 +4,10 @@
 
 namespace Template {
 
-class SampleScene : public Crow2D::Scenes::Scene {
+class MainMenu : public Crow2D::Scenes::Scene {
   // #region Crow2D
 public:
-  SampleScene();
+  MainMenu();
   void Load() override;
   // #endregion
 

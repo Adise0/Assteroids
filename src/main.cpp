@@ -1,4 +1,4 @@
-#include "Scenes/SampleScene/SampleScene.h"
+#include "Scenes/MainMenu/MainMenu.h"
 #include <Crow2D/Crow2D.h>
 #include <cstdio>
 
@@ -8,7 +8,7 @@ int main() {
   std::srand(time(NULL));
   Config::Init("Template!");
 
-  SampleScene *sampleScene = new SampleScene();
-  Engine::Run(*sampleScene);
+  MainMenu *mainMenu = new MainMenu();
+  Engine::Run(*mainMenu);
   printf("Bye bye!\n");
 }

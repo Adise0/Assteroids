@@ -1,6 +1,6 @@
 
 
-#include "SampleScene.h"
+#include "MainMenu.h"
 #include <Crow2D/Crow2dUtils.h>
 #include <Crow2D/components/Renderer.h>
 #include <Crow2D/dataObjects/Sprite.h>
@@ -15,16 +15,16 @@ using namespace Crow2D::Types;
 using namespace Crow2D::Rendering;
 
 
-SampleScene::SampleScene() : Scene("Sample Scene") {}
+MainMenu::MainMenu() : Scene("Sample Scene") {}
 
-void SampleScene::Load() { LoadUI(); }
+void MainMenu::Load() { LoadUI(); }
 
-void SampleScene::LoadUI() {
+void MainMenu::LoadUI() {
 
   GameObject &uiHolderGO = rootGameObject->CreateChild("UI Holder");
   Camera &cam = uiHolderGO.AddComponent<Camera>();
   cam.SetAsActiveCamera();
-  UIRenderer &mainRenderer = uiHolderGO.AddComponent<UIRenderer>("ui/samples/index.html");
+  UIRenderer &mainRenderer = uiHolderGO.AddComponent<UIRenderer>("ui/MainMenu/MainMenu.html");
 }
 } // namespace Template
 
