@@ -1,7 +1,9 @@
 #include "Asteroid.h"
 #include <Crow2D/TimeManager.h>
+#include <Crow2D/components/RigidBody.h>
 #include <Crow2D/dataObjects/Sprite.h>
 #include <Crow2D/dataObjects/Vectors.h>
+#include <cstdio>
 
 namespace Assteroids::Behaviours {
 using namespace Crow2D;
@@ -17,13 +19,14 @@ void Asteroid::Init(const int &type, const Crow2D::Types::Vector2 &dir, const fl
 
   currentHealth = (type + 1) * 2;
 
-  SetupVisuals();
+  SetupObject();
 }
 
 
 void Asteroid::Update() { Move(); }
 
 void Asteroid::OnTriggerEnter(const Crow2D::Components::Collider &other) {
+  printf("Collision with %s\n", other.gameObject->name.get().c_str());
   if (other.gameObject->name != "Bullet") return;
   Destroy(other.gameObject);
   currentHealth--;
@@ -32,7 +35,7 @@ void Asteroid::OnTriggerEnter(const Crow2D::Components::Collider &other) {
   Destroy(gameObject);
 }
 
-void Asteroid::SetupVisuals() {
+void Asteroid::SetupObject() {
 
   Vector2 size;
   switch (type) {
@@ -47,6 +50,11 @@ void Asteroid::SetupVisuals() {
     break;
   }
   gameObject->AddComponent<Renderer>(Primitives::Circle, size);
+  CircleCollider &col = gameObject->AddComponent<CircleCollider>(size.x / 2);
+  col.isTrigger = true;
+  col.drawGizmos = true;
+  RigidBody &rb = gameObject->AddComponent<RigidBody>();
+  rb.collisionMode = CollisionMode::Continuous;
 }
 void Asteroid::Move() {
 

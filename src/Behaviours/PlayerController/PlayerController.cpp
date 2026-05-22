@@ -1,13 +1,11 @@
-#include <cmath>
+#include <Crow2D/dataObjects/Vectors.h>
+#include <cstdio>
 #define NOMINMAX
 
+#include "Bullet.h"
 #include "PlayerController.h"
-#include <Crow2D/GameObject.h>
-#include <Crow2D/components/Animator.h>
-#include <Crow2D/components/Renderer.h>
-#include <Crow2D/dataObjects/AnimationClip.h>
-#include <Crow2D/dataObjects/Vectors.h>
 #include <algorithm>
+#include <cmath>
 #include <stdexcept>
 #include <string>
 
@@ -23,17 +21,35 @@ using namespace Data;
 
 void PlayerController::Awake() {
   stats = Stats::Singleton;
+  fireTimer = 1.0f / stats->fireRate;
   SetupVisuals();
 }
 void PlayerController::Update() {
   // #region Update
   MovePlayer();
   RotatePlayer();
-
-  if (InputManager::GetKey("Space").wasPressedThisFrame) {
-    stats->Upgrade(Stat::MaxSpeed);
-  }
+  Shoot();
   // #endregion
+}
+
+void PlayerController::Shoot() {
+  if (currentFireTimer < fireTimer) {
+    currentFireTimer += Time::deltaTime;
+    return;
+  }
+  if (currentFireTimer != fireTimer) currentFireTimer = fireTimer;
+
+  if (InputManager::GetKey("Space").isPressed) {
+    currentFireTimer = 0;
+    printf("Shooting!\n");
+
+    GameObject &bulletGO = gameObject->scene->rootGameObject->CreateChild("Bullet");
+    bulletGO.transform->position =
+        transform->position + (Vector3(transform->forward) * Vector2(0.3f, 0.3f));
+
+    bulletGO.transform->rotation = transform->rotation;
+    bulletGO.AddComponent<Bullet>();
+  }
 }
 
 

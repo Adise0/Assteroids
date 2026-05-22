@@ -1,8 +1,6 @@
 #pragma once
 
 #include <Crow2D/Crow2D.h>
-#include <Crow2D/Event.h>
-#include <Crow2D/components/colliders/Collider.h>
 
 
 namespace Assteroids::Behaviours {
@@ -41,7 +39,7 @@ public:
 
 private:
   void Move();
-  void SetupVisuals();
+  void SetupObject();
 
   // #endregion
 };

@@ -19,6 +19,8 @@ public:
 
 private:
   short _currentLives = MaxLives;
+  float currentFireTimer = 100;
+  float fireTimer = 0;
 
 private:
   Data::Stats *stats;
