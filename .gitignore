@@ -1,0 +1,16 @@
+# EDITOR
+.vscode
+
+# BUILD
+default
+build
+out
+
+release/versions
+
+# NODE
+node_modules
+
+# CONFIG
+CMakeUserPresets.json
+local.cmake

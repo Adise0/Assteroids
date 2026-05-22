@@ -1,0 +1,29 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "style": "sass ./scss:./assets/ui --watch",
+    "build": "tsc",
+    "dev": "nodemon -q"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ModelStudioDev/Crow2D-Boilerplate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ModelStudioDev/Crow2D-Boilerplate/issues"
+  },
+  "homepage": "https://github.com/ModelStudioDev/Crow2D-Boilerplate#readme",
+  "devDependencies": {
+    "crow2d-types": "^1.0.1",
+    "nodemon": "^3.1.14",
+    "sass": "^1.99.0",
+    "typescript": "^6.0.3"
+  }
+}

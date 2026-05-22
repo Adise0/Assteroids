@@ -1,0 +1,71 @@
+cmake_minimum_required(VERSION 3.25)
+project(Template VERSION 0.1.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+include(local.cmake OPTIONAL)
+
+find_package(Crow2D REQUIRED
+  PATHS "${CROW2D_SDK_PATH}"
+  NO_DEFAULT_PATH
+)
+
+file(GLOB_RECURSE SOURCES
+  CONFIGURE_DEPENDS
+  "${CMAKE_SOURCE_DIR}/src/*.cpp"
+  "${CMAKE_SOURCE_DIR}/src/*.cxx"
+  "${CMAKE_SOURCE_DIR}/src/*.h"
+  "${CMAKE_SOURCE_DIR}/src/*.hpp"
+)
+
+
+add_executable(Template ${SOURCES}  ./release/icon.rc)
+
+set_target_properties(Template PROPERTIES
+  WIN32_EXECUTABLE $<NOT:$<CONFIG:Debug>>
+  LINK_FLAGS_RELEASE "/ENTRY:mainCRTStartup"
+  LINK_FLAGS_RELWITHDEBINFO "/ENTRY:mainCRTStartup"
+)
+
+file(GLOB_RECURSE Template_ALL_HEADERS "${CMAKE_SOURCE_DIR}/src/*.h")
+set(Template_INCLUDE_DIRS "")
+
+foreach(_header ${Template_ALL_HEADERS})
+  get_filename_component(_dir "${_header}" DIRECTORY)
+  list(APPEND Template_INCLUDE_DIRS "${_dir}")
+endforeach()
+
+list(REMOVE_DUPLICATES Template_INCLUDE_DIRS)
+
+target_include_directories(Template PRIVATE
+  "${CMAKE_SOURCE_DIR}/src"
+  ${Template_INCLUDE_DIRS}
+)
+
+target_link_libraries(Template PRIVATE Crow2D::Crow2D)
+
+crow2d_copy_runtime(Template)
+crow2d_copy_assets(Template)
+
+
+install(TARGETS Template
+  RUNTIME DESTINATION .
+)
+
+install(DIRECTORY "${CMAKE_BINARY_DIR}/"
+  DESTINATION .
+  FILES_MATCHING
+  PATTERN "*.dll"
+  PATTERN "CMakeFiles" EXCLUDE
+  PATTERN "default" EXCLUDE
+)
+
+install(DIRECTORY "${CMAKE_BINARY_DIR}/assets"
+  DESTINATION .
+  PATTERN "*.css.map" EXCLUDE
+)
+
+install(DIRECTORY "${CMAKE_BINARY_DIR}/resources"
+  DESTINATION .
+)
