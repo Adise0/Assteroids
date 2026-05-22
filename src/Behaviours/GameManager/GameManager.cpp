@@ -25,11 +25,11 @@ void GameManager::Update() {
 }
 
 void GameManager::SpawnAsteroids() {
+  if (asteroids >= MaxAsteroids) return;
   if (currentWaitTime < spawnWait) {
     currentWaitTime += Time::deltaTime;
     return;
   }
-
   spawnWait = InitialWait / (1.0f + (float)points * ScaleFactor);
   currentWaitTime = 0;
 
@@ -93,11 +93,13 @@ void GameManager::SpawnAsteroid(const Crow2D::Types::Vector3 &spawnPos, const in
   Asteroid &asteroid = asteroidGO.AddComponent<Asteroid>();
   asteroid.Init(type, dir, speed);
   asteroid.OnAsteroidDestoryed += [this](Asteroid *asteroid) { OnAsteroidDestroyed(asteroid); };
+  asteroids++;
 }
 
 void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
   int pointsToAdd = (asteroid->type + 1) * 10;
   _points += pointsToAdd;
+  asteroids--;
 
   if (asteroid->type == 0) return;
 

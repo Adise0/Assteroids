@@ -7,6 +7,10 @@ namespace Assteroids::Behaviours {
 
 
 class Teleporter : public Crow2D::Components::Behaviour {
+  // #region Data
+private:
+  bool hasBeenInsideOnce = false;
+  // #endregion
 
 
   // #region Crow2D

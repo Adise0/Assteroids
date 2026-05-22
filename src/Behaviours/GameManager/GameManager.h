@@ -25,8 +25,10 @@ private:
   const float ScaleFactor = 0.005f;
   const float MinAsteroidSpeed = 0.3f;
   const float MaxAsteroidSpeed = 1.2f;
+  const short MaxAsteroids = 10;
 
   int _points;
+  short asteroids = 0;
   float spawnWait = InitialWait;
   float currentWaitTime = spawnWait;
   // #endregion

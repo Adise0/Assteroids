@@ -1,4 +1,5 @@
 #include "Asteroid.h"
+#include "Teleporter.h"
 #include <Crow2D/TimeManager.h>
 #include <Crow2D/components/RigidBody.h>
 #include <Crow2D/dataObjects/Sprite.h>
@@ -26,7 +27,6 @@ void Asteroid::Init(const int &type, const Crow2D::Types::Vector2 &dir, const fl
 void Asteroid::Update() { Move(); }
 
 void Asteroid::OnTriggerEnter(const Crow2D::Components::Collider &other) {
-  printf("Collision with %s\n", other.gameObject->name.get().c_str());
   if (other.gameObject->name != "Bullet") return;
   Destroy(other.gameObject);
   currentHealth--;
@@ -49,6 +49,7 @@ void Asteroid::SetupObject() {
     size = Vector2(1.5f, 1.5f);
     break;
   }
+  gameObject->AddComponent<Teleporter>();
   gameObject->AddComponent<Renderer>(Primitives::Circle, size);
   CircleCollider &col = gameObject->AddComponent<CircleCollider>(size.x / 2);
   col.isTrigger = true;

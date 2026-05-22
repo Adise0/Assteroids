@@ -41,7 +41,6 @@ void PlayerController::Shoot() {
 
   if (InputManager::GetKey("Space").isPressed) {
     currentFireTimer = 0;
-    printf("Shooting!\n");
 
     GameObject &bulletGO = gameObject->scene->rootGameObject->CreateChild("Bullet");
     bulletGO.transform->position =

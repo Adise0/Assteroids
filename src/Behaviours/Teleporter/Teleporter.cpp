@@ -18,22 +18,27 @@ void Teleporter::CheckBounds() {
 
   Vector2 pos = Vector2(transform->position);
 
+  bool isOutside = false;
+
   if (pos.x < Camera::activeCamera->rect.get().Left()) {
     pos.x = Camera::activeCamera->rect.get().Right();
-    pos.y = -pos.y;
+    isOutside = true;
   }
   if (pos.x > Camera::activeCamera->rect.get().Right()) {
     pos.x = Camera::activeCamera->rect.get().Left();
-    pos.y = -pos.y;
+    isOutside = true;
   }
   if (pos.y < Camera::activeCamera->rect.get().Bottom()) {
     pos.y = Camera::activeCamera->rect.get().Top();
-    pos.x = -pos.x;
+    isOutside = true;
   }
   if (pos.y > Camera::activeCamera->rect.get().Top()) {
     pos.y = Camera::activeCamera->rect.get().Bottom();
-    pos.x = -pos.x;
+    isOutside = true;
   }
+
+  if (!hasBeenInsideOnce && !isOutside) hasBeenInsideOnce = true;
+  if (!hasBeenInsideOnce) return;
 
   if (pos != Vector2(transform->position)) transform->position = Vector3(pos);
 }
