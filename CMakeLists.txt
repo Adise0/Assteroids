@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(Template VERSION 0.1.0 LANGUAGES CXX)
+project(Assteroids VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -20,36 +20,36 @@ file(GLOB_RECURSE SOURCES
 )
 
 
-add_executable(Template ${SOURCES}  ./release/icon.rc)
+add_executable(Assteroids ${SOURCES}  ./release/icon.rc)
 
-set_target_properties(Template PROPERTIES
+set_target_properties(Assteroids PROPERTIES
   WIN32_EXECUTABLE $<NOT:$<CONFIG:Debug>>
   LINK_FLAGS_RELEASE "/ENTRY:mainCRTStartup"
   LINK_FLAGS_RELWITHDEBINFO "/ENTRY:mainCRTStartup"
 )
 
-file(GLOB_RECURSE Template_ALL_HEADERS "${CMAKE_SOURCE_DIR}/src/*.h")
-set(Template_INCLUDE_DIRS "")
+file(GLOB_RECURSE Assteroids_ALL_HEADERS "${CMAKE_SOURCE_DIR}/src/*.h")
+set(Assteroids_INCLUDE_DIRS "")
 
-foreach(_header ${Template_ALL_HEADERS})
+foreach(_header ${Assteroids_ALL_HEADERS})
   get_filename_component(_dir "${_header}" DIRECTORY)
-  list(APPEND Template_INCLUDE_DIRS "${_dir}")
+  list(APPEND Assteroids_INCLUDE_DIRS "${_dir}")
 endforeach()
 
-list(REMOVE_DUPLICATES Template_INCLUDE_DIRS)
+list(REMOVE_DUPLICATES Assteroids_INCLUDE_DIRS)
 
-target_include_directories(Template PRIVATE
+target_include_directories(Assteroids PRIVATE
   "${CMAKE_SOURCE_DIR}/src"
-  ${Template_INCLUDE_DIRS}
+  ${Assteroids_INCLUDE_DIRS}
 )
 
-target_link_libraries(Template PRIVATE Crow2D::Crow2D)
+target_link_libraries(Assteroids PRIVATE Crow2D::Crow2D)
 
-crow2d_copy_runtime(Template)
-crow2d_copy_assets(Template)
+crow2d_copy_runtime(Assteroids)
+crow2d_copy_assets(Assteroids)
 
 
-install(TARGETS Template
+install(TARGETS Assteroids
   RUNTIME DESTINATION .
 )
 

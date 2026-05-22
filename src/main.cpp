@@ -2,11 +2,11 @@
 #include <Crow2D/Crow2D.h>
 #include <cstdio>
 
-using namespace Template;
+using namespace Assteroids;
 using namespace Crow2D;
 int main() {
   std::srand(time(NULL));
-  Config::Init("Template!");
+  Config::Init("Assteroids!");
 
   MainMenu *mainMenu = new MainMenu();
   Engine::Run(*mainMenu);

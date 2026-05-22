@@ -15,7 +15,7 @@ In order to use this template you need:
 
 1. Create a repo from this template
 2. Clone it
-3. Search and replace "Template" for the name of your game.
+3. Search and replace "Assteroids" for the name of your game.
 4. Create a `local.cmake` file and add your patth to the [Crow2D SDK](https://github.com/ModelStudioDev/Crow2D/releases), someting like
 
 ```cmake

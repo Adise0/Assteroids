@@ -12,9 +12,9 @@ fi
 
 if [[ "${RUN_AFTER:-1}" == "1" ]]; then
   echo "=========================="
-  echo "     Running Template      "
+  echo "     Running Assteroids      "
   echo "=========================="
-  ./build/dev/Template.exe
+  ./build/dev/Assteroids.exe
 else
   echo "Skipping execution (-n passed)"
 fi

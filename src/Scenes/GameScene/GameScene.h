@@ -4,16 +4,16 @@
 
 namespace Assteroids {
 
-class MainMenu : public Crow2D::Scenes::Scene {
+class GameScene : public Crow2D::Scenes::Scene {
   // #region Crow2D
 public:
-  MainMenu();
+  GameScene();
   void Load() override;
   // #endregion
 
   // #region Loads
 private:
-  void LoadUI();
+  void LoadHierachy();
   // #endregion
 };
 } // namespace Assteroids
