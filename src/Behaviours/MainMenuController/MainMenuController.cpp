@@ -1,7 +1,6 @@
 
 #include "MainMenuController.h"
 #include "GameScene.h"
-#include <Crow2D/SceneManager.h>
 #include <stdexcept>
 
 namespace Assteroids::Behaviours {
