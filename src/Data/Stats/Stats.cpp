@@ -50,7 +50,6 @@ void Stats::Upgrade(Stat stat) {
   }
 
   if (!currentLevel || *currentLevel >= MaxLevel) return;
-  printf("Upgrading %d to lvl %d", (int)stat, ((*currentLevel) + 1));
   (*currentLevel)++;
 }
 } // namespace Assteroids::Data
