@@ -1,4 +1,5 @@
-
+#include <cmath>
+#define NOMINMAX
 
 #include "PlayerController.h"
 #include <Crow2D/GameObject.h>
@@ -9,6 +10,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <string>
+
 
 namespace Assteroids::Behaviours {
 using namespace Crow2D;
@@ -22,6 +24,7 @@ void PlayerController::Awake() { SetupVisuals(); }
 void PlayerController::Update() {
   // #region Update
   MovePlayer();
+  RotatePlayer();
   // #endregion
 }
 
@@ -63,14 +66,37 @@ void PlayerController::MovePlayer() {
   // #region MovePlayer
 
   if (InputManager::GetKey("W").isPressed) {
-    currentSpeed = std::clamp(currentSpeed + acceleration * Time::deltaTime, 0.0f, maxSpeed);
+    velocity += Vector3(transform->forward) * acceleration * Time::deltaTime;
+
+    if (velocity.SqrMagnitude() > std::pow(maxSpeed, 2)) {
+      velocity = velocity.Normalized() * maxSpeed;
+    }
+
     if (animator->currentClip != powerClip) animator->Play(powerClip);
-  } else if (currentSpeed > 0) {
-    currentSpeed = std::clamp(currentSpeed - acceleration * Time::deltaTime, 0.0f, maxSpeed);
+  } else {
     if (animator->currentClip != idleClip) animator->Play(idleClip);
+    velocity -= velocity.Normalized() * deacceleration * Time::deltaTime;
+    if (velocity.SqrMagnitude() <= 0) {
+      velocity = Vector2::Zero;
+    }
   }
 
-  transform->Translate(Vector3(transform->forward) * currentSpeed * Time::deltaTime);
+
+  transform->Translate(Vector3(velocity) * Time::deltaTime);
+  // #endregion
+}
+
+void PlayerController::RotatePlayer() {
+  // #region MovePlayer
+  float angle = transform->rotation;
+  if (InputManager::GetKey("A").isPressed) {
+    angle += -1 * turnSpeed * Time::deltaTime;
+  }
+  if (InputManager::GetKey("D").isPressed) {
+    angle += turnSpeed * Time::deltaTime;
+  }
+
+  transform->rotation = angle;
   // #endregion
 }
 

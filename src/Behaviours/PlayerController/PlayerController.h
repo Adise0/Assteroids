@@ -16,13 +16,14 @@ class PlayerController : public Crow2D::Components::Behaviour {
   // #region Data
 public:
   float acceleration = 2;
-  float maxSpeed = 3;
-  float turnSpeed = 45;
+  float deacceleration = 1;
+  float maxSpeed = 10;
+  float turnSpeed = 180;
   short maxLives = 4;
   short currentLives = maxLives;
 
 private:
-  float currentSpeed = 0;
+  Crow2D::Types::Vector2 velocity;
 
   Crow2D::Components::Animator *animator;
   Crow2D::Components::Renderer *shipRenderer;
