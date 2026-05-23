@@ -10,7 +10,11 @@ using namespace Crow2D::Components;
 using namespace Crow2D::Types;
 
 void Bullet::Awake() { SetupObject(); }
-void Bullet::Update() { Move(); }
+void Bullet::Update() {
+  Move();
+  currentlifetime += Time::deltaTime;
+  if (currentlifetime >= maxLifetime) Destroy(gameObject);
+}
 
 void Bullet::SetupObject() {
   gameObject->AddComponent<Renderer>(Primitives::Circle, Vector2(0.1f, 0.3f),

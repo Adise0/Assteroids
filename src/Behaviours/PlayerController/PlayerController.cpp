@@ -1,3 +1,4 @@
+#include "Teleporter.h"
 #include <Crow2D/dataObjects/Vectors.h>
 #include <cstdio>
 #define NOMINMAX
@@ -48,6 +49,7 @@ void PlayerController::Shoot() {
 
     bulletGO.transform->rotation = transform->rotation;
     bulletGO.AddComponent<Bullet>();
+    bulletGO.AddComponent<Teleporter>();
   }
 }
 

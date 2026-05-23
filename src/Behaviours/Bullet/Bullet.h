@@ -11,6 +11,8 @@ class Bullet : public Crow2D::Components::Behaviour {
 public:
   // TODO: base on stats i guess?
   float bulletspeed = 10.0f;
+  float maxLifetime = 1.5f;
+  float currentlifetime = 0;
   // #endregion
 
   // #region Crow2D
