@@ -78,6 +78,7 @@ public:
 
   static int GetStatLevel(Stat stat);
   static float GetStat(Stat stat);
+  static float GetStatAtLevel(Stat stat, short level);
 
   // #endregion
 };

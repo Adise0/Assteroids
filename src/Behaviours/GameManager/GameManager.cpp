@@ -1,7 +1,7 @@
 
 #include "GameManager.h"
 #include "Asteroid.h"
-#include <Crow2D/components/UIRenderer.h>
+#include <nlohmann/json.hpp>
 #include <stdexcept>
 #include <string>
 
@@ -11,6 +11,7 @@ using namespace Crow2D::Components;
 using namespace Crow2D::Scenes;
 using namespace Crow2D::Types;
 using namespace Data;
+using namespace nlohmann;
 
 
 int GameManager::GetPoints() const { return _points; }
@@ -123,11 +124,16 @@ void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
 
 void GameManager::OpenShop(const std::vector<Data::Stat> &stats) {
 
-  std::string payload = "[";
+  json payload;
   for (Stat stat : stats) {
-    payload += "\"" + Stats::GetStatName(stat) + ",\"";
+    short statLevel = Stats::GetStatLevel(stat);
+
+    payload += {{"name", Stats::GetStatName(stat)},
+                {"level", statLevel},
+                {"currentValue", Stats::GetStat(stat)},
+                {"newValue", Stats::GetStatAtLevel(stat, statLevel)}};
   }
-  payload += "]";
+
 
   hud->bridge->Send("OpenShop", payload);
 }
@@ -135,12 +141,11 @@ void GameManager::OpenShop(const std::vector<Data::Stat> &stats) {
 void GameManager::PickUpgrade(Stat stat) {
   Stats::Singleton->Upgrade(stat);
 
-  std::string payload = "{";
-  payload += "\"name\":\"" + Stats::GetStatName(stat) + "\",";
-  payload += "\"lvl\":" + std::to_string(Stats::GetStatLevel(stat)) + ",";
-  payload += "\"value\":" + std::to_string(Stats::GetStat(stat)) + "";
+  json payload = {{"name", Stats::GetStatName(stat)},
+                  {"level", Stats::GetStatLevel(stat)},
+                  {"value", Stats::GetStat(stat)}};
 
-  payload += "}";
+
 
   hud->bridge->Send("UpdateStat", payload);
 }
