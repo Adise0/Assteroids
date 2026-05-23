@@ -1,4 +1,5 @@
 #include "Teleporter.h"
+#include <Crow2D/Application.h>
 #include <Crow2D/components/colliders/CircleCollider.h>
 #include <Crow2D/dataObjects/Vectors.h>
 #include <SDL3/SDL_pixels.h>
@@ -72,7 +73,9 @@ void PlayerController::SetupVisuals() {
   LoadLevelSprites(1);
   Vector2 size(1, 1);
 
-  gameObject->AddComponent<CircleCollider>(0.7f);
+  CircleCollider &col = gameObject->AddComponent<CircleCollider>(0.2f);
+  col.isTrigger = true;
+  col.drawGizmos = true;
   engineRenderer = &gameObject->AddComponent<Renderer>(engineSprite, size);
   shipRenderer = &gameObject->AddComponent<Renderer>(shipSprites[MaxLives], size);
   GameObject &animatorGO = gameObject->CreateChild("Animations");
@@ -167,6 +170,7 @@ void PlayerController::TakeDamage() {
   currentGraceTimer = 0;
 
   _currentLives--;
+  if (_currentLives <= 0) Application::Quit();
   shipRenderer->SetColor(SDL_Color{100, 100, 100, 255});
   shipRenderer->SetSprite(shipSprites[_currentLives]);
 }
