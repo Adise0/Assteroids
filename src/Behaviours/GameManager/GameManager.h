@@ -1,7 +1,9 @@
 #pragma once
 
+#include "Stats.h"
 #include <Crow2D/Crow2D.h>
 #include <Crow2D/dataObjects/Vectors.h>
+#include <vector>
 
 namespace Assteroids::Behaviours {
 
@@ -49,6 +51,9 @@ private:
                      const Crow2D::Types::Vector2 &dir, const float &speed);
   void OnAsteroidDestroyed(const Asteroid *asteroid);
 
+
+  void OpenShop(const std::vector<Data::Stat> &stats);
+  void PickUpgrade(Data::Stat stat);
   // #endregion
 };
 } // namespace Assteroids::Behaviours

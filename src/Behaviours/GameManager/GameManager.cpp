@@ -10,6 +10,7 @@ using namespace Crow2D;
 using namespace Crow2D::Components;
 using namespace Crow2D::Scenes;
 using namespace Crow2D::Types;
+using namespace Data;
 
 
 int GameManager::GetPoints() const { return _points; }
@@ -17,6 +18,9 @@ int GameManager::GetPoints() const { return _points; }
 void GameManager::Awake() {
   // #region Awake
   hud = gameObject->GetComponent<UIRenderer>();
+  hud->bridge->On("PickUpgrade", [this](const std::string &type, const std::string &payload) {
+    PickUpgrade(Stats::GetStatByName(payload));
+  });
   // #endregion
 }
 
@@ -116,5 +120,29 @@ void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
 }
 
 
+
+void GameManager::OpenShop(const std::vector<Data::Stat> &stats) {
+
+  std::string payload = "[";
+  for (Stat stat : stats) {
+    payload += "\"" + Stats::GetStatName(stat) + ",\"";
+  }
+  payload += "]";
+
+  hud->bridge->Send("OpenShop", payload);
+}
+
+void GameManager::PickUpgrade(Stat stat) {
+  Stats::Singleton->Upgrade(stat);
+
+  std::string payload = "{";
+  payload += "\"name\":\"" + Stats::GetStatName(stat) + "\",";
+  payload += "\"lvl\":" + std::to_string(Stats::GetStatLevel(stat)) + ",";
+  payload += "\"value\":" + std::to_string(Stats::GetStat(stat)) + "";
+
+  payload += "}";
+
+  hud->bridge->Send("UpdateStat", payload);
+}
 
 } // namespace Assteroids::Behaviours

@@ -1,10 +1,16 @@
 #include "Stats.h"
+#include <algorithm>
 #include <cstdio>
 #include <stdexcept>
 
 namespace Assteroids::Data {
 
 Stats *Stats::Singleton = nullptr;
+std::unordered_map<Stat, std::string> Stats::_statNames = {
+    {Stat::Acceleration, "Acceleration"}, {Stat::AbilityDamage, "AbilityDamage"},
+    {Stat::Deceleration, "Deceleration"}, {Stat::MaxSpeed, "MaxSpeed"},
+    {Stat::TurnSpeed, "TurnSpeed"},       {Stat::FireRate, "FireRate"},
+};
 
 short Stats::GetAccelerationLevel() const { return _accelerationLevel; }
 short Stats::GetDecelerationLevel() const { return _decelerationLevel; }
@@ -51,5 +57,15 @@ void Stats::Upgrade(Stat stat) {
 
   if (!currentLevel || *currentLevel >= MaxLevel) return;
   (*currentLevel)++;
+}
+
+std::string Stats::GetStatName(Stat stat) { return _statNames[stat]; }
+
+Stat Stats::GetStatByName(const std::string &statName) {
+  auto it = std::find_if(_statNames.begin(), _statNames.end(),
+                         [&statName](const auto &pair) { return pair.second == statName; });
+
+  if (it == _statNames.end()) throw std::runtime_error("Unknown stat \"" + statName + "\"");
+  return it->first;
 }
 } // namespace Assteroids::Data

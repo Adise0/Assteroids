@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Crow2D/Crow2D.h>
+#include <unordered_map>
 #include <vector>
 
 namespace Assteroids::Data {
@@ -53,6 +54,7 @@ private:
   short _fireRateLevel = 1;
   short _abilityDamageLevel = 1;
   short _maxSpeedLevel = 1;
+  static std::unordered_map<Stat, std::string> _statNames;
 
 private:
   std::vector<float> _accelerationByLevel = {1.0f, 1.3f, 1.5f, 1.8f, 2.5f};
@@ -71,6 +73,11 @@ public:
   // #region Methods
 public:
   void Upgrade(Stat stat);
+  static std::string GetStatName(Stat stat);
+  static Stat GetStatByName(const std::string &statName);
+
+  static int GetStatLevel(Stat stat);
+  static float GetStat(Stat stat);
 
   // #endregion
 };
