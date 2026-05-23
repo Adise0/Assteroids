@@ -38,7 +38,10 @@ void PlayerController::Shoot() {
     currentFireTimer += Time::deltaTime;
     return;
   }
-  if (currentFireTimer != fireTimer) currentFireTimer = fireTimer;
+  if (currentFireTimer != fireTimer) {
+    fireTimer = 1.0f / stats->fireRate;
+    currentFireTimer = fireTimer;
+  }
 
   if (InputManager::GetKey("Space").isPressed) {
     currentFireTimer = 0;
