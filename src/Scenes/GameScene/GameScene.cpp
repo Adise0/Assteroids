@@ -4,6 +4,7 @@
 #include "GameManager.h"
 #include "PlayerController.h"
 #include "Teleporter.h"
+#include <Crow2D/components/UIRenderer.h>
 #include <cstdio>
 
 namespace Assteroids {
@@ -20,6 +21,7 @@ void GameScene::Load() { LoadHierachy(); }
 void GameScene::LoadHierachy() {
   Camera &cam = rootGameObject->AddComponent<Camera>();
   GameManager &gameManager = rootGameObject->AddComponent<GameManager>();
+  rootGameObject->AddComponent<UIRenderer>("ui/HUD/HUD.html");
 
   GameObject &playerGO = rootGameObject->CreateChild("Player");
   playerGO.AddComponent<PlayerController>();

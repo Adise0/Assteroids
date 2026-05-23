@@ -1,8 +1,9 @@
 
 #include "GameManager.h"
 #include "Asteroid.h"
-#include <Crow2D/components/Camera.h>
+#include <Crow2D/components/UIRenderer.h>
 #include <stdexcept>
+#include <string>
 
 namespace Assteroids::Behaviours {
 using namespace Crow2D;
@@ -15,7 +16,7 @@ int GameManager::GetPoints() const { return _points; }
 
 void GameManager::Awake() {
   // #region Awake
-
+  hud = gameObject->GetComponent<UIRenderer>();
   // #endregion
 }
 
@@ -99,6 +100,7 @@ void GameManager::SpawnAsteroid(const Crow2D::Types::Vector3 &spawnPos, const in
 void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
   int pointsToAdd = (asteroid->type + 1) * 10;
   _points += pointsToAdd;
+  hud->bridge->Send("Points", std::to_string(_points));
   asteroids--;
 
   if (asteroid->type == 0) return;

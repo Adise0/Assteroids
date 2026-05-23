@@ -20,6 +20,9 @@ public:
   GETTER_PROPERTY(GameManager, int, points, GetPoints);
 
 private:
+  Crow2D::Components::UIRenderer *hud = nullptr;
+
+private:
   const float MinWait = 0.5f;
   const float InitialWait = 4.0f;
   const float ScaleFactor = 0.005f;
