@@ -1,4 +1,5 @@
 #include "Asteroid.h"
+#include "PlayerController.h"
 #include "Teleporter.h"
 #include <Crow2D/TimeManager.h>
 #include <Crow2D/components/RigidBody.h>
@@ -29,6 +30,11 @@ void Asteroid::Init(const int &type, const Crow2D::Types::Vector2 &dir, const fl
 void Asteroid::Update() { Move(); }
 
 void Asteroid::OnTriggerEnter(const Crow2D::Components::Collider &other) {
+  if (other.gameObject->name == "Player") {
+    PlayerController *controller = other.gameObject->GetComponent<PlayerController>();
+    controller->TakeDamage();
+  }
+
   if (other.gameObject->name != "Bullet") return;
   Destroy(other.gameObject);
   currentHealth--;

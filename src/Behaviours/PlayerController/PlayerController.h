@@ -22,6 +22,9 @@ private:
   float currentFireTimer = 100;
   float fireTimer = 0;
 
+  const float GracePeriod = 3;
+  float currentGraceTimer;
+
 private:
   Data::Stats *stats;
   Crow2D::Types::Vector2 velocity;
@@ -47,6 +50,9 @@ private:
   // #endregion
 
   // #region Methods
+public:
+  void TakeDamage();
+
 private:
   void SetupVisuals();
   void LoadLevelSprites(short level);
