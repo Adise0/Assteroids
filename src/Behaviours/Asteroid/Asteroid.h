@@ -24,6 +24,9 @@ public:
   // #region Events
 public:
   Crow2D::Events::Event<Asteroid *> OnAsteroidDestoryed;
+
+private:
+  static Crow2D::Types::Sprite *asteroidSprite;
   // #endregion
 
 

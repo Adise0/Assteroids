@@ -11,6 +11,8 @@ using namespace Crow2D;
 using namespace Crow2D::Components;
 using namespace Crow2D::Types;
 
+Sprite *Asteroid::asteroidSprite = nullptr;
+
 void Asteroid::Init(const int &type, const Crow2D::Types::Vector2 &dir, const float &speed) {
 
   this->type = type;
@@ -50,10 +52,10 @@ void Asteroid::SetupObject() {
     break;
   }
   gameObject->AddComponent<Teleporter>();
-  gameObject->AddComponent<Renderer>(Primitives::Circle, size);
+  if (asteroidSprite == nullptr) asteroidSprite = new Sprite("sprites/asteroid.png");
+  gameObject->AddComponent<Renderer>(asteroidSprite, size);
   CircleCollider &col = gameObject->AddComponent<CircleCollider>(size.x / 2);
   col.isTrigger = true;
-  col.drawGizmos = true;
   RigidBody &rb = gameObject->AddComponent<RigidBody>();
   rb.collisionMode = CollisionMode::Continuous;
 }

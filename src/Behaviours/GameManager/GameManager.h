@@ -2,6 +2,7 @@
 
 #include "Stats.h"
 #include <Crow2D/Crow2D.h>
+#include <Crow2D/dataObjects/Sprite.h>
 #include <Crow2D/dataObjects/Vectors.h>
 #include <vector>
 
@@ -24,6 +25,7 @@ public:
 private:
   Crow2D::Components::UIRenderer *hud = nullptr;
 
+
 private:
   const float MinWait = 0.5f;
   const float InitialWait = 4.0f;
@@ -32,7 +34,7 @@ private:
   const float MaxAsteroidSpeed = 1.2f;
   const short MaxAsteroids = 10;
 
-  int _points = 90;
+  int _points = 0;
   short asteroids = 0;
   float spawnWait = InitialWait;
   float currentWaitTime = spawnWait;

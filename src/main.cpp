@@ -12,10 +12,8 @@ int main() {
 
   new Data::Stats();
 
-  // MainMenu *mainMenu = new MainMenu();
-  // Engine::Run(*mainMenu);
+  MainMenu *mainMenu = new MainMenu();
+  Engine::Run(*mainMenu);
 
-  GameScene *gameScene = new GameScene();
-  Engine::Run(*gameScene);
   printf("Bye bye!\n");
 }
