@@ -1,0 +1,118 @@
+// body {
+//   position: relative;
+// }
+
+.holder {
+  position: relative;
+  height: 800px;
+  width: 1280px;
+  background-color: black;
+}
+
+p {
+  color: rgba($color: #fff, $alpha: 0.8);
+}
+
+.points {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+
+  height: 50px;
+  min-width: fit-content;
+  padding-right: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+
+  font-size: 30px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 0;
+
+    height: 1px;
+    width: 100%;
+    background-color: rgba($color: #fff, $alpha: 0.5);
+  }
+}
+
+.statHolder {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+
+  height: 50px;
+  min-width: fit-content;
+  padding-left: 30px;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    left: 0;
+
+    height: 1px;
+    width: 100%;
+    background-color: rgba($color: #fff, $alpha: 0.5);
+  }
+
+  .stat {
+    height: 100%;
+    width: 150px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    .statValue {
+      font-size: 20px;
+    }
+  }
+}
+
+.shopHolder {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  padding-bottom: 110px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+
+  .statCard {
+    height: 400px;
+    width: 250px;
+
+    padding: 40px;
+
+    border: 1px solid rgba($color: #fff, $alpha: 0.5);
+    background-color: black;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .statIcon {
+      height: 150px;
+      border-radius: 20px;
+    }
+
+    .statCardName {
+      font-size: 30px;
+    }
+  }
+}

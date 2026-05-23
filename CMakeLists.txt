@@ -44,6 +44,7 @@ target_include_directories(Assteroids PRIVATE
 )
 
 target_link_libraries(Assteroids PRIVATE Crow2D::Crow2D)
+target_include_directories(Assteroids PRIVATE third_party)
 
 crow2d_copy_runtime(Assteroids)
 crow2d_copy_assets(Assteroids)
