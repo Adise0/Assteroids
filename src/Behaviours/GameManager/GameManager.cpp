@@ -39,7 +39,6 @@ void GameManager::Start() {
         {"value", Stats::GetStat((Stat)i)},
     };
   }
-  printf("Sending stats!\n");
   hud->bridge->On("__loaded", [this, payload](const std::string, const std::string) {
     hud->bridge->Send("Stats", payload.dump());
   });
@@ -126,7 +125,7 @@ void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
   int pointsToAdd = (asteroid->type + 1) * 10;
   _points += pointsToAdd;
   hud->bridge->Send("Points", std::to_string(_points));
-  if (_points % 100 == 0) {
+  if (_points != 0 && _points % 100 == 0) {
     OpenShop();
     Time::timeScale = 0;
   }

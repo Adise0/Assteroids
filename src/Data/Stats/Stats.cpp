@@ -7,9 +7,9 @@ namespace Assteroids::Data {
 
 Stats *Stats::Singleton = nullptr;
 std::unordered_map<Stat, std::string> Stats::_statNames = {
-    {Stat::Acceleration, "Acceleration"}, {Stat::AbilityDamage, "AbilityDamage"},
-    {Stat::Deceleration, "Deceleration"}, {Stat::MaxSpeed, "MaxSpeed"},
-    {Stat::TurnSpeed, "TurnSpeed"},       {Stat::FireRate, "FireRate"},
+    {Stat::Acceleration, "Acceleration"}, {Stat::AbilityDamage, "Ability damage"},
+    {Stat::Deceleration, "Deceleration"}, {Stat::MaxSpeed, "Max speed"},
+    {Stat::TurnSpeed, "Turn speed"},      {Stat::FireRate, "Fire rate"},
 };
 
 short Stats::GetAccelerationLevel() const { return _accelerationLevel; }
