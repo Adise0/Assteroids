@@ -123,9 +123,14 @@ void GameManager::SpawnAsteroid(const Crow2D::Types::Vector3 &spawnPos, const in
 
 void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
   int pointsToAdd = (asteroid->type + 1) * 10;
+
+  int old = _points;
   _points += pointsToAdd;
   hud->bridge->Send("Points", std::to_string(_points));
-  if (_points != 0 && _points % 100 == 0) {
+
+  bool openShop = (old / 100) != (_points / 100);
+
+  if (openShop) {
     OpenShop();
     Time::timeScale = 0;
   }

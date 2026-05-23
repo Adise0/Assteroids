@@ -32,7 +32,7 @@ private:
   const float MaxAsteroidSpeed = 1.2f;
   const short MaxAsteroids = 10;
 
-  int _points;
+  int _points = 90;
   short asteroids = 0;
   float spawnWait = InitialWait;
   float currentWaitTime = spawnWait;
