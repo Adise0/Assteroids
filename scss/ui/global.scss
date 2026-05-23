@@ -1,6 +1,15 @@
-* {
-  box-sizing: border-box;
+@font-face {
+  font-family: "SpaceGrotesk";
+  src: url("./fonts/SpaceGrotesk-Regular.ttf") format("truetype");
+  font-weight: 100 900;
 }
 
-body {
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+
+  font-family: "SpaceGrotesk";
+  font-synthesis: none;
+  user-select: none;
 }

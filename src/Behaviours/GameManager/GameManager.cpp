@@ -1,9 +1,12 @@
 
 #include "GameManager.h"
 #include "Asteroid.h"
+#include <cstdio>
+#include <cstdlib>
 #include <nlohmann/json.hpp>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 namespace Assteroids::Behaviours {
 using namespace Crow2D;
@@ -22,7 +25,24 @@ void GameManager::Awake() {
   hud->bridge->On("PickUpgrade", [this](const std::string &type, const std::string &payload) {
     PickUpgrade(Stats::GetStatByName(payload));
   });
+
+
   // #endregion
+}
+
+void GameManager::Start() {
+  json payload;
+  for (short i = 0; i < (short)Stat::Count; i++) {
+
+    payload += {
+        {"name", Stats::GetStatName((Stat)i)},
+        {"value", Stats::GetStat((Stat)i)},
+    };
+  }
+  printf("Sending stats!\n");
+  hud->bridge->On("__loaded", [this, payload](const std::string, const std::string) {
+    hud->bridge->Send("Stats", payload.dump());
+  });
 }
 
 void GameManager::Update() {
@@ -106,6 +126,12 @@ void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
   int pointsToAdd = (asteroid->type + 1) * 10;
   _points += pointsToAdd;
   hud->bridge->Send("Points", std::to_string(_points));
+  if (_points % 100 == 0) {
+    OpenShop();
+    Time::timeScale = 0;
+  }
+
+
   asteroids--;
 
   if (asteroid->type == 0) return;
@@ -122,7 +148,16 @@ void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
 
 
 
-void GameManager::OpenShop(const std::vector<Data::Stat> &stats) {
+void GameManager::OpenShop() {
+  std::vector<Stat> stats;
+
+  while (stats.size() != 3) {
+    int statIndex = rand() % (int)Stat::Count;
+    short statLevel = Stats::GetStatLevel((Stat)statIndex);
+    if (statLevel == Stats::MaxLevel) continue;
+    stats.push_back((Stat)statIndex);
+  }
+
 
   json payload;
   for (Stat stat : stats) {
@@ -135,7 +170,7 @@ void GameManager::OpenShop(const std::vector<Data::Stat> &stats) {
   }
 
 
-  hud->bridge->Send("OpenShop", payload);
+  hud->bridge->Send("OpenShop", payload.dump());
 }
 
 void GameManager::PickUpgrade(Stat stat) {
@@ -147,7 +182,8 @@ void GameManager::PickUpgrade(Stat stat) {
 
 
 
-  hud->bridge->Send("UpdateStat", payload);
+  hud->bridge->Send("UpdateStat", payload.dump());
+  Time::timeScale = 1;
 }
 
 } // namespace Assteroids::Behaviours

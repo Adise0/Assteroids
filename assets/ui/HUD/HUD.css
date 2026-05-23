@@ -1,5 +1,68 @@
-#points {
-  color: white;
+.holder {
+  position: relative;
+  height: 800px;
+  width: 1280px;
+  background-color: black;
+}
+
+.points {
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+  height: 50px;
+  min-width: fit-content;
+  padding-right: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  font-size: 30px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.points::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.statHolder {
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  height: 50px;
+  min-width: fit-content;
+  padding-left: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+.statHolder p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 15px;
+}
+.statHolder::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.statHolder .stat {
+  height: 100%;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.statHolder .stat .statValue {
   font-size: 20px;
 }
 

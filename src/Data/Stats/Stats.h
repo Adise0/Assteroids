@@ -6,7 +6,7 @@
 
 namespace Assteroids::Data {
 
-enum class Stat { Acceleration, Deceleration, TurnSpeed, FireRate, AbilityDamage, MaxSpeed };
+enum class Stat { Acceleration, Deceleration, TurnSpeed, FireRate, AbilityDamage, MaxSpeed, Count };
 
 class Stats {
   // #region Getters

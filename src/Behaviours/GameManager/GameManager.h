@@ -41,6 +41,7 @@ private:
   // #region Crow2D
 private:
   void Awake() override;
+  void Start() override;
   void Update() override;
   // #endregion
 
@@ -52,7 +53,7 @@ private:
   void OnAsteroidDestroyed(const Asteroid *asteroid);
 
 
-  void OpenShop(const std::vector<Data::Stat> &stats);
+  void OpenShop();
   void PickUpgrade(Data::Stat stat);
   // #endregion
 };

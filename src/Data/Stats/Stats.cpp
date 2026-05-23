@@ -68,4 +68,56 @@ Stat Stats::GetStatByName(const std::string &statName) {
   if (it == _statNames.end()) throw std::runtime_error("Unknown stat \"" + statName + "\"");
   return it->first;
 }
+
+int Stats::GetStatLevel(Stat stat) {
+  switch (stat) {
+  case Stat::Acceleration:
+    return Singleton->_accelerationLevel;
+  case Stat::Deceleration:
+    return Singleton->_decelerationLevel;
+  case Stat::TurnSpeed:
+    return Singleton->_turnSpeedLevel;
+  case Stat::FireRate:
+    return Singleton->_fireRateLevel;
+  case Stat::AbilityDamage:
+    return Singleton->_abilityDamageLevel;
+  case Stat::MaxSpeed:
+    return Singleton->_maxSpeedLevel;
+  }
+}
+
+float Stats::GetStat(Stat stat) {
+  switch (stat) {
+  case Stat::Acceleration:
+    return Singleton->GetAcceleration();
+  case Stat::Deceleration:
+    return Singleton->GetDeceleration();
+  case Stat::TurnSpeed:
+    return Singleton->GetTurnSpeed();
+  case Stat::FireRate:
+    return Singleton->GetFireRate();
+  case Stat::AbilityDamage:
+    return Singleton->GetAbilityDamage();
+  case Stat::MaxSpeed:
+    return Singleton->GetMaxSpeed();
+  }
+}
+
+float Stats::GetStatAtLevel(Stat stat, short level) {
+  switch (stat) {
+  case Stat::Acceleration:
+    return Singleton->_accelerationByLevel[level - 1];
+  case Stat::Deceleration:
+    return Singleton->_decelerationByLevel[level - 1];
+  case Stat::TurnSpeed:
+    return Singleton->_turnSpeedByLevel[level - 1];
+  case Stat::FireRate:
+    return Singleton->_fireRateByLevel[level - 1];
+  case Stat::AbilityDamage:
+    return Singleton->_abilityDamageByLevel[level - 1];
+  case Stat::MaxSpeed:
+    return Singleton->_maxSpeedByLevel[level - 1];
+  }
+}
+
 } // namespace Assteroids::Data
