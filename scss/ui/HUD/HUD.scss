@@ -83,10 +83,11 @@ p {
 
 .shopHolder {
   position: absolute;
-  inset: 0;
-  bottom: 110px;
+  width: 100vw;
+  height: 100vh;
+  padding-bottom: 110px;
 
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 50px;
@@ -98,7 +99,7 @@ p {
     padding: 40px;
 
     border: 1px solid rgba($color: #fff, $alpha: 0.5);
-    background-color: rgba($color: #fff, $alpha: 0.02);
+    background-color: black;
 
     display: flex;
     flex-direction: column;

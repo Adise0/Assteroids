@@ -4,6 +4,7 @@ const statsHolder = document.querySelector(".statHolder");
 const shopHolder = document.querySelector(".shopHolder");
 let stats;
 const ToId = (name) => name.replace(/\s+/g, "-");
+const ToRound = (num) => Math.round(num * 10) / 10;
 const UpdatePoints = (newPoints) => {
     points.textContent = newPoints;
 };
@@ -13,14 +14,14 @@ const UpdateStat = (newStat) => {
     statElm.querySelector(".statName").textContent =
         `${stat.name} - (${stat.level})`;
     statElm.querySelector(".statValue").textContent =
-        `${stat.value} ${GetUnits(stat.name)}`;
+        `${ToRound(stat.value)} ${GetUnits(stat.name)}`;
 };
 const DisplayStats = (statValues) => {
     stats = JSON.parse(statValues);
     stats.forEach((stat) => {
         const value = `<div class="stat" id="${ToId(stat.name)}">
           <p class="statName">${stat.name} - (1)</p>
-          <p class="statValue">${stat.value} ${GetUnits(stat.name)}</p>
+          <p class="statValue">${ToRound(stat.value)} ${GetUnits(stat.name)}</p>
         </div>`;
         statsHolder.innerHTML += value;
     });
@@ -34,8 +35,9 @@ const OpenShop = (shopValue) => {
           <div class="statCard" onclick="PickOption('${shopStat.name}')">
           <p class="statCardName">${shopStat.name}</p>
           <img src="../icons/${shopStat.name}.png" alt="" class="statIcon" />
-          <p class="statChange">${shopStat.currentValue} -> ${shopStat.newValue}</p>
+          <p class="statChange">${ToRound(shopStat.currentValue)} -> ${ToRound(shopStat.newValue)}</p>
           <p class="level">${shopStat.level}</p>
+          </div>
     `;
     });
     shopHolder.innerHTML = value;
