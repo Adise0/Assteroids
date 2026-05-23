@@ -1,9 +1,17 @@
 // body {
 //   position: relative;
-//   height: 800px;
-//   width: 1280px;
-//   background-color: black;
 // }
+
+.holder {
+  position: relative;
+  height: 800px;
+  width: 1280px;
+  background-color: black;
+}
+
+p {
+  color: rgba($color: #fff, $alpha: 0.8);
+}
 
 .points {
   position: absolute;
@@ -20,7 +28,6 @@
   gap: 20px;
 
   font-size: 30px;
-  color: rgba($color: #fff, $alpha: 0.8);
 
   &::before {
     content: "";
@@ -48,11 +55,6 @@
   align-items: center;
   gap: 20px;
 
-  p {
-    color: rgba($color: #fff, $alpha: 0.8);
-    font-size: 15px;
-  }
-
   &::before {
     content: "";
     position: absolute;
@@ -75,6 +77,41 @@
 
     .statValue {
       font-size: 20px;
+    }
+  }
+}
+
+.shopHolder {
+  position: absolute;
+  inset: 0;
+  bottom: 110px;
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+
+  .statCard {
+    height: 400px;
+    width: 250px;
+
+    padding: 40px;
+
+    border: 1px solid rgba($color: #fff, $alpha: 0.5);
+    background-color: rgba($color: #fff, $alpha: 0.02);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    .statIcon {
+      height: 150px;
+      border-radius: 20px;
+    }
+
+    .statCardName {
+      font-size: 30px;
     }
   }
 }

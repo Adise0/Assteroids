@@ -1,3 +1,4 @@
+#define NOMINMAX
 
 #include "GameManager.h"
 #include "Asteroid.h"
@@ -130,10 +131,7 @@ void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
 
   bool openShop = (old / 100) != (_points / 100);
 
-  if (openShop) {
-    OpenShop();
-    Time::timeScale = 0;
-  }
+  if (openShop) OpenShop();
 
 
   asteroids--;
@@ -154,12 +152,24 @@ void GameManager::OnAsteroidDestroyed(const Asteroid *asteroid) {
 
 void GameManager::OpenShop() {
   std::vector<Stat> stats;
+  std::vector<Stat> allStats;
 
-  while (stats.size() != 3) {
-    int statIndex = rand() % (int)Stat::Count;
-    short statLevel = Stats::GetStatLevel((Stat)statIndex);
+  for (short i = 0; i < (short)Stat::Count; i++) {
+    short statLevel = Stats::GetStatLevel((Stat)i);
     if (statLevel == Stats::MaxLevel) continue;
-    stats.push_back((Stat)statIndex);
+    allStats.push_back((Stat)i);
+  }
+
+  short amount = std::min((int)allStats.size(), 3);
+
+  if (amount == 0) return;
+
+  Time::timeScale = 0;
+
+  while (stats.size() != amount) {
+    int statIndex = rand() % allStats.size();
+    stats.push_back(allStats[statIndex]);
+    allStats.erase(allStats.begin() + statIndex);
   }
 
 
@@ -168,9 +178,9 @@ void GameManager::OpenShop() {
     short statLevel = Stats::GetStatLevel(stat);
 
     payload += {{"name", Stats::GetStatName(stat)},
-                {"level", statLevel},
+                {"level", statLevel + 1},
                 {"currentValue", Stats::GetStat(stat)},
-                {"newValue", Stats::GetStatAtLevel(stat, statLevel)}};
+                {"newValue", Stats::GetStatAtLevel(stat, statLevel + 1)}};
   }
 
 
